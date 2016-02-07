@@ -1,0 +1,41 @@
+---
+title: 'Statistical Inference Course Project, Part 2'
+output: html_document
+---
+Assignment Description
+
+Analyze the ToothGrowth data in the R datasets package.
+1.Load the ToothGrowth data and perform some basic exploratory data analyses
+2.Provide a basic summary of the data.
+3.Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
+4.State your conclusions and the assumptions needed for your conclusions
+
+
+Load Data
+
+```{r}
+library(datasets)
+
+```
+Data Analysis
+```{r}
+library(ggplot2)
+ggplot(data=ToothGrowth, aes(x=as.factor(dose), y=len,)) +
+geom_bar(stat="identity",) +
+  facet_grid(. ~ supp) + 
+xlab("Dose in miligrams") + 
+ylab("Tooth length") + 
+guides(fill=guide_legend(title="Supplement type")) 
+
+```
+```{r}
+fit <- lm(len ~ dose + supp, data=ToothGrowth)
+summary(fit )
+confint(fit)
+```
+
+
+Conclusions
+1.From the plot, it is clear that as the dose increases, the effectiveness of the both the methods increases.
+2.From the hypothesis and confidence interval analysis, for lower dose values (0.5 and 1.0),is an effective method while for higher dose value (2.0), both methods achieve parity.
+
